@@ -1,1 +1,4 @@
 /vendor/
+.idea/media.iml
+.idea/modules.xml
+.idea/workspace.xml
