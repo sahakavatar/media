@@ -9,7 +9,7 @@
  *
  */
 
-namespace App\Modules\Media\Plugins\Drive\Models;
+namespace Sahakavatar\Media\Plugins\Drive\Models;
 
 use File;
 use Illuminate\Database\Eloquent\Model;

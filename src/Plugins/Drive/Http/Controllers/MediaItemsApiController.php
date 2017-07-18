@@ -6,7 +6,7 @@
  * Time: 3:46 PM
  */
 
-namespace App\Modules\Media\Plugins\Drive\Http\Controllers;
+namespace Sahakavatar\Media\Plugins\Drive\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Media\Plugins\Drive\Models\Folders;

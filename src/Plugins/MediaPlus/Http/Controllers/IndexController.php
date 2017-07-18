@@ -1,4 +1,4 @@
-<?php namespace App\Modules\Media\Plugins\MediaPlus\Http\Controllers;
+<?php namespace Sahakavatar\Media\Plugins\MediaPlus\Http\Controllers;
 
 /**
  * Created by PhpStorm.

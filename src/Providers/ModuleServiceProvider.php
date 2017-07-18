@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Media\Providers;
+namespace Sahakavatar\Media\Providers;
 
-use Caffeinated\Modules\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class ModuleServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Media\Http;
+namespace Sahakavatar\Media\Http;
 
 use App\helpers\helpers;
 use App\Models\Setting;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\Media\Plugins\Drive;
+namespace Sahakavatar\Media\Plugins\Drive;
 /**
  * Created by PhpStorm.
  * User: Edo

@@ -6,7 +6,7 @@
  * Time: 2:24 PM
  */
 
-namespace App\Modules\Media\Plugins\Drive\Http\Controllers;
+namespace Sahakavatar\Media\Plugins\Drive\Http\Controllers;
 
 use App\Core\CmsItemReader;
 use App\Http\Controllers\Controller;

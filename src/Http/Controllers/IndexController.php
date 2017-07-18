@@ -1,4 +1,4 @@
-<?php namespace App\Modules\Media\Http\Controllers;
+<?php namespace Sahakavatar\Media\Http\Controllers;
 
 /**
  * Created by PhpStorm.

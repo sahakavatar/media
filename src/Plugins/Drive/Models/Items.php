@@ -6,7 +6,7 @@
  * Time: 4:33 PM
  */
 
-namespace App\Modules\Media\Plugins\Drive\Models;
+namespace Sahakavatar\Media\Plugins\Drive\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
