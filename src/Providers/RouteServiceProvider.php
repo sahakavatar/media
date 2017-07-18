@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Modules\Media\Http\Controllers';
+    protected $namespace = 'Sahakavatar\Media\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
