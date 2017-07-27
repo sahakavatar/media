@@ -2,7 +2,7 @@
 
 namespace Sahakavatar\Media\Http;
 
-use App\helpers\helpers;
+use Sahakavatar\Cms\Helpers\helpers;
 use App\Models\Setting;
 use App\Models\Term;
 use App\Modules\Media\Models\Media;
