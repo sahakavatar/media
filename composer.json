@@ -8,6 +8,7 @@
         }
     ],
     "type": "module",
+    "route": "media",
     "require": {},
 	"autoload": {
         "psr-4": {
