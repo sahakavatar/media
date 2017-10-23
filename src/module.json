@@ -1,20 +1,20 @@
 {
-    "name": "Media",
-    "slug": "media",
-    "type":"core",
-    "author":"Abokamal",
-    "title":"Media",
-    "author_site":"http://dev.bootydev.co.uk/",
-    "version": "1.0",
-    "created_at": "05-11-2013 12:00",
-    "description": "This is the description for the Media module.",
-    "tables":[],
-    "assets" : {
-        "css" : {
-            "0":"styles.css"
-        },
-        "js" : {
-            "0" : "js.js"
-        }
+  "name": "Media",
+  "slug": "media",
+  "type": "core",
+  "author": "Abokamal",
+  "title": "Media",
+  "author_site": "http://dev.bootydev.co.uk/",
+  "version": "1.0",
+  "created_at": "05-11-2013 12:00",
+  "description": "This is the description for the Media module.",
+  "tables": [],
+  "assets": {
+    "css": {
+      "0": "styles.css"
+    },
+    "js": {
+      "0": "js.js"
     }
+  }
 }

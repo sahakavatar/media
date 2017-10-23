@@ -12,4 +12,4 @@
 */
 
 
-        Route::get('/settings','IndexController@settings');
+Route::get('/settings', 'IndexController@settings');

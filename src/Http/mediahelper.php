@@ -2,7 +2,6 @@
 
 namespace Sahakavatar\Media\Http;
 
-use Sahakavatar\Cms\Helpers\helpers;
 use App\Models\Setting;
 use App\Models\Term;
 use App\Modules\Media\Models\Media;
@@ -10,6 +9,7 @@ use App\Modules\Media\Models\MediaVariation;
 use App\Modules\Settings\Models\Settings;
 use File;
 use Image;
+use Sahakavatar\Cms\Helpers\helpers;
 use Validator;
 
 /**
@@ -51,7 +51,7 @@ class mediahelper
     /**
      * mediahelper constructor.
      */
-    public function __construct ()
+    public function __construct()
     {
         $this->helpers = new helpers;
         $this->media_path = Config('config.MEDIA_PATH');
@@ -61,12 +61,12 @@ class mediahelper
      * @param $request
      * @return array
      */
-    public function checkSettingsAndUplaod ($request)
+    public function checkSettingsAndUplaod($request)
     {
         $folder_id = $request->get('active_id', null);
         $settings = Settings::media()->where('settingkey', $folder_id)->first();
 
-        if (! $settings) return ['msg' => 'folder is not valid', 'code' => '401'];
+        if (!$settings) return ['msg' => 'folder is not valid', 'code' => '401'];
 
         $extension = strtolower($request->file('file')[0]->getClientOriginalExtension()); // getting image extension
         $file_name = $request->file('file')[0]->getClientOriginalName();
@@ -74,9 +74,9 @@ class mediahelper
 
         $check = $this->setMediaChecks($extension);
 
-        if (! $check) return ['msg' => 'You cann\'t upload this media type,Please Check settings of your media section', 'code' => '401'];
+        if (!$check) return ['msg' => 'You cann\'t upload this media type,Please Check settings of your media section', 'code' => '401'];
 
-        if (! $this->media_type) return ['msg' => 'File is not valid, Please Check settings of your media section', 'code' => '401'];
+        if (!$this->media_type) return ['msg' => 'File is not valid, Please Check settings of your media section', 'code' => '401'];
 
         $term = false;
         if ($folder_id) $term = Term::find($folder_id);
@@ -92,7 +92,7 @@ class mediahelper
         $validator = Validator::make($file, $rules);
         if ($validator->fails()) {
             return [
-                'msg'  => 'File size is largeer then allowed, Please Check settings of your media section',
+                'msg' => 'File size is largeer then allowed, Please Check settings of your media section',
                 'code' => '401'
             ];
         }
@@ -109,14 +109,14 @@ class mediahelper
         $request->file('file')[0]->move($this->folder . "/", $name); // uploading file to given path
 
         return [
-            'title'     => preg_replace('/[^A-Za-z0-9\-]/', '', $file_name),
-            'type'      => $this->media_type,
-            'name'      => $name,
+            'title' => preg_replace('/[^A-Za-z0-9\-]/', '', $file_name),
+            'type' => $this->media_type,
+            'name' => $name,
             'folder_id' => $folder_id,
-            'image'     => $this->getImage($name, $extension),
-            'ext'       => $extension,
-            'path'      => $this->folder . "/" . $name,
-            'code'      => '200'
+            'image' => $this->getImage($name, $extension),
+            'ext' => $extension,
+            'path' => $this->folder . "/" . $name,
+            'code' => '200'
         ];
     }
 
@@ -124,11 +124,11 @@ class mediahelper
      *
      * @param type $ext
      */
-    private function setMediaChecks ($ext)
+    private function setMediaChecks($ext)
     {
         $allowed_img = $this->strToArr($this->media_settings['allowed_img_ext']);
         if (in_array($ext, $allowed_img)) {
-            if (! $this->media_settings['allowimage']) return false;
+            if (!$this->media_settings['allowimage']) return false;
 
             $this->media_type = Config('config.img');
             $this->max_allowed_size = $this->media_settings['img_max_size'];
@@ -139,7 +139,7 @@ class mediahelper
 
         $allowed_docs = $this->strToArr($this->media_settings['allowed_doc_ext']);
         if (in_array($ext, $allowed_docs)) {
-            if (! $this->media_settings['allowdoc']) return false;
+            if (!$this->media_settings['allowdoc']) return false;
 
             $this->media_type = Config('config.doc');
             $this->max_allowed_size = $this->media_settings['doc_max_size'];
@@ -150,7 +150,7 @@ class mediahelper
 
         $allowed_music = $this->strToArr($this->media_settings['allowed_music_ext']);
         if (in_array($ext, $allowed_music)) {
-            if (! $this->media_settings['allowmusic']) return false;
+            if (!$this->media_settings['allowmusic']) return false;
 
             $this->media_type = Config('config.music');
             $this->max_allowed_size = $this->media_settings['music_max_size'];
@@ -161,7 +161,7 @@ class mediahelper
 
         $allowed_vid = $this->strToArr($this->media_settings['allowed_vid_ext']);
         if (in_array($ext, $allowed_vid)) {
-            if (! $this->media_settings['allowvideo']) return false;
+            if (!$this->media_settings['allowvideo']) return false;
 
             $this->media_type = Config('config.vid');
             $this->max_allowed_size = $this->media_settings['vid_max_size'];
@@ -176,7 +176,7 @@ class mediahelper
      * @param type $str
      * @return type
      */
-    public function strToArr ($str)
+    public function strToArr($str)
     {
         $str = strtolower($str);
         $str = preg_replace('/\s+/', '', $str);
@@ -191,11 +191,11 @@ class mediahelper
      * @param $title of Folder
      * @return path of folder as string
      */
-    public function _mkFolder ($title)
+    public function _mkFolder($title)
     {
 
         $path = Config('config.MEDIA_PATH') . $title;
-        if (! File::exists($path)) {
+        if (!File::exists($path)) {
             File::makeDirectory($path, 0777, true);
         }
 
@@ -207,11 +207,11 @@ class mediahelper
      * @param $extension
      * @return mixed|string
      */
-    public function getImage ($name, $extension)
+    public function getImage($name, $extension)
     {
         $path = '';
         $path = Config('config.MEDIA_ICONS') . $this->media_type . "/" . $extension . ".png";
-        if (! File::exists($path)) {
+        if (!File::exists($path)) {
             $path = Config('config.DEF_IMG');
         }
 
@@ -222,7 +222,7 @@ class mediahelper
      * @param $id
      * @return mixed|string
      */
-    public function originalImage ($id)
+    public function originalImage($id)
     {
         $path = Config('config.DEF_IMG');
         if ($id) {
@@ -242,7 +242,7 @@ class mediahelper
      * @param $response
      * @return string
      */
-    public function mkThumbs ($media_id, $variation_id, $response)
+    public function mkThumbs($media_id, $variation_id, $response)
     {
         $name = $response['name'];
         if ($this->allowedthumb($this->media_type, $response['ext'])) {
@@ -250,7 +250,7 @@ class mediahelper
             $variation_path = $this->folder . "/" . Config('config.img') . "/" . $media_id . "/" . $variation_id;
             File::makeDirectory($media_path);
             File::makeDirectory($variation_path);
-            if (! File::move($this->folder . "/" . $this->media_type . "/" . $name, $variation_path . "/" . $name)) {
+            if (!File::move($this->folder . "/" . $this->media_type . "/" . $name, $variation_path . "/" . $name)) {
                 dd("Couldn't rename file");
             } else {
                 $width = Image::make($variation_path . "/" . $name)->width();
@@ -270,7 +270,7 @@ class mediahelper
      * @param $ext
      * @return bool
      */
-    public function allowedthumb ($type, $ext)
+    public function allowedthumb($type, $ext)
     {
         if ($type == Config('config.img') && $ext != 'svg') {
             return true;
@@ -284,7 +284,7 @@ class mediahelper
      * @param $name
      * @param $scale
      */
-    public function makeSizes ($folder, $name, $scale)
+    public function makeSizes($folder, $name, $scale)
     {
         $sizes = ['lg', 'md', 'sm'];
         foreach ($sizes as $size) {
@@ -316,7 +316,7 @@ class mediahelper
      * @param $variation
      * @return array
      */
-    public function saveVariation ($req, $variation)
+    public function saveVariation($req, $variation)
     {
 
         $path = Config('config.MEDIA_PATH') . $req['folderId'] . "/" . Config('config.img') . "/" . $req['imageId'];
@@ -345,7 +345,7 @@ class mediahelper
      * @param type $variation
      * @return string
      */
-    public function copyFolders ($media, $new_media, $variation)
+    public function copyFolders($media, $new_media, $variation)
     {
         $folder = $media->folder_id;
         $path = Config('config.MEDIA_PATH') . $folder;
@@ -367,7 +367,7 @@ class mediahelper
      * @param type $media
      * @param type $new_folder_id
      */
-    public function ChangeFolder ($media, $new_folder_id)
+    public function ChangeFolder($media, $new_folder_id)
     {
         $media_path = "";
         $term = Term::find($new_folder_id);
@@ -386,7 +386,7 @@ class mediahelper
      *
      * @param type $media
      */
-    public function deleteMedia ($media)
+    public function deleteMedia($media)
     {
         $src_folder = Config('config.MEDIA_PATH') . $media->term->description . "/";
         File::delete($src_folder . $media->name);
@@ -398,15 +398,15 @@ class mediahelper
      * @param type $media
      * @return type
      */
-    public function formatLinks ($media)
+    public function formatLinks($media)
     {
         $path = url() . "/" . $this->media_path . $media->folder_id . "/" . $media->media_type . "/";
 
         return [
-            'path'   => $path,
-            'file'   => $media->name,
+            'path' => $path,
+            'file' => $media->name,
             'folder' => $media->folder_id,
-            'type'   => $media->media_type
+            'type' => $media->media_type
         ];
     }
 
@@ -415,36 +415,36 @@ class mediahelper
      * @param type $media
      * @return type
      */
-    public function links ($media)
+    public function links($media)
     {
         $links = [];
         $path = base_path($this->media_path . $media->folder_id . "/" . $media->media_type . "/");
         $links['core'] = [
-            'direct'   => $path . $media->name,
+            'direct' => $path . $media->name,
             'download' => $path . "media/download/" . $media->id,
-            'href'     => $path . $media->name,
-            'form'     => '[URL=' . $path . $media->name . '][/URL]',
+            'href' => $path . $media->name,
+            'form' => '[URL=' . $path . $media->name . '][/URL]',
         ];
         if ($media->media_type == 'images') {
             $links['sm'] = [
-                'direct'   => $path . 'sm/' . $media->name,
+                'direct' => $path . 'sm/' . $media->name,
                 'download' => $path . "media/download/" . $media->id . '/sm',
-                'href'     => $path . 'sm/' . $media->name,
-                'form'     => '[URL=' . $path . 'sm/' . $media->name . '][/URL]',
+                'href' => $path . 'sm/' . $media->name,
+                'form' => '[URL=' . $path . 'sm/' . $media->name . '][/URL]',
             ];
 
             $links['md'] = [
-                'direct'   => $path . 'md/' . $media->name,
+                'direct' => $path . 'md/' . $media->name,
                 'download' => $path . "media/download/" . $media->id . '/md',
-                'href'     => $path . 'md/' . $media->name,
-                'form'     => '[URL=' . $path . 'md/' . $media->name . '][/URL]',
+                'href' => $path . 'md/' . $media->name,
+                'form' => '[URL=' . $path . 'md/' . $media->name . '][/URL]',
             ];
 
             $links['lg'] = [
-                'direct'   => $path . 'lg/' . $media->name,
+                'direct' => $path . 'lg/' . $media->name,
                 'download' => $path . "media/download/" . $media->id . '/lg',
-                'href'     => $path . 'md/' . $media->name,
-                'form'     => '[URL=' . $path . 'lg/' . $media->name . '][/URL]',
+                'href' => $path . 'md/' . $media->name,
+                'form' => '[URL=' . $path . 'lg/' . $media->name . '][/URL]',
             ];
         }
 
@@ -455,7 +455,7 @@ class mediahelper
      * @param $attr
      * @param $val
      */
-    public function set ($attr, $val)
+    public function set($attr, $val)
     {
         $this->$attr = $val;
     }
@@ -464,7 +464,7 @@ class mediahelper
      * @param $media
      * @return string
      */
-    public function mediapath ($media)
+    public function mediapath($media)
     {
         $folder = $media->term;
         $main_path = $folder->description;
@@ -482,7 +482,7 @@ class mediahelper
      * @param $path
      * @return string
      */
-    public function filesize ($path)
+    public function filesize($path)
     {
         return $this->helpers->formatBytes(filesize($path));
     }
@@ -491,7 +491,7 @@ class mediahelper
      * @param $media
      * @return array
      */
-    public function format_media ($media)
+    public function format_media($media)
     {
         $media_arr = [];
         foreach ($media as $sngl_rec) {
@@ -506,14 +506,14 @@ class mediahelper
      * @param $sngl_media_arr
      * @return mixed|string
      */
-    public function getPath ($sngl_media_arr)
+    public function getPath($sngl_media_arr)
     {
         $path = '';
         $path = Config('config.MEDIA_ICONS') . $sngl_media_arr['media_type'] . "/" . $sngl_media_arr['ext'] . ".png";
         if ($sngl_media_arr['media_type'] == 'images') {
             $path = $this->mkThumb($sngl_media_arr['id']);
         }
-        if (! File::exists($path)) {
+        if (!File::exists($path)) {
             $path = Config('config.DEF_IMG');
         }
 
@@ -526,7 +526,7 @@ class mediahelper
      * @param null $resize_height
      * @return string
      */
-    public function mkThumb ($media_id, $resize_width = null, $resize_height = null)
+    public function mkThumb($media_id, $resize_width = null, $resize_height = null)
     {
         $resize_width = ($resize_width == null) ? Config('config.t_width') : $resize_width;
         $resize_height = ($resize_height == null) ? Config('config.t_height') : $resize_height;
@@ -537,7 +537,7 @@ class mediahelper
             $src_folder = Config('config.MEDIA_PATH') . $media->term->description . "/";
             //Cache folder
             $des_folder = config('paths.CACHE') . "media/";
-            if (! File::exists($des_folder)) {
+            if (!File::exists($des_folder)) {
                 File::makeDirectory($des_folder);
             }
 
@@ -575,7 +575,7 @@ class mediahelper
      * @return string
      * @internal param $variation_id
      */
-    public function makeSize ($folder, $name, $scale, $variation_id, $width, $height)
+    public function makeSize($folder, $name, $scale, $variation_id, $width, $height)
     {
         if ($scale = 'w') {
             $img = Image::make($folder . "/" . $name)->resize(
@@ -606,7 +606,7 @@ class mediahelper
     /**
      *
      */
-    private function setMediaSettings ()
+    private function setMediaSettings()
     {
         $media_settings = [];
         $rs = Setting::where('section', 'media')->get();

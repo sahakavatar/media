@@ -2,8 +2,8 @@
 
 use App\Models\Setting;
 use App\Models\Term;
-use App\Modules\Media\Media;
 use App\Modules\Media\Http\mediahelper;
+use App\Modules\Media\Media;
 
 if (!function_exists('BBMediaSettings')) {
 
@@ -116,8 +116,8 @@ if (!function_exists('BBMediaThumb')) {
     function BBMediaThumb($id = null, $w = null, $h = null)
     {
         $mediahelper = new mediahelper();
-        $w = ($w!=null)?$w:Config('config.t_width');
-        $h = ($h!=null)?$h:Config('config.t_height');
+        $w = ($w != null) ? $w : Config('config.t_width');
+        $h = ($h != null) ? $h : Config('config.t_height');
         $img = $mediahelper->mkThumb($id, $w, $h);
         return $img;
     }
